@@ -7,7 +7,7 @@ const app = express()
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended:true}))
 
-mongoose.connect('mongodb://localhost:27017/formdb',{
+mongoose.connect('mongodb+srv://jaya232:jaya232000@cluster0.lg6os.mongodb.net/formdb',{
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
