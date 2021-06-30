@@ -1,4 +1,4 @@
-
+require('dotenv').config()
 var express = require("express")
 var bodyParser = require("body-parser")
 var mongoose = require("mongoose")
@@ -7,11 +7,11 @@ const app = express()
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended:true}))
 
-mongoose.connect('mongodb+srv://jaya232:jaya232000@cluster0.lg6os.mongodb.net/formdb',{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
+mongoose.connect(process.env.MONGO_CONNECTION_URL,{useNewUrlParser: true,useUnifiedTopology: true});
+var db = mongoose.connection;
 
+db.on('error',()=>console.log("Error in Connecting to Database"));
+db.once('open',()=>console.log("Connected to Database"))
 
 app.get("/",function(req,res){
     res.sendFile(__dirname+"/index.html");
@@ -19,10 +19,7 @@ app.get("/",function(req,res){
 
 
 
-var db = mongoose.connection;
 
-db.on('error',()=>console.log("Error in Connecting to Database"));
-db.once('open',()=>console.log("Connected to Database"))
 app.post("/success.html",(req,res)=>{
     var name = req.body.name;
     var email = req.body.email;
